@@ -7,17 +7,48 @@
     <link rel="stylesheet/less" href="css/styles.less">
     
 </head>
-<body ng-app="app">
-    <div class="header" >
-        <div class="header-inner container"></div>
+<body ng-app="app" ng-controller="parantCtrl">
+    <div class="header navbar-static-top" ng-controller="headCtrl">
+        <div class="header-inner container">
+            <div class="col-xs-1">
+                <span class="glyphicon glyphicon-user pull-left"></span>
+            </div>
+            <div class="col-xs-7">My task list</div>
+            <div class="col-xs-3">
+                <input type="text" class="form-control" ng-model="taskfilter" ng-change="transit()" placeholder="search">
+            </div>
+            <div class="col-xs-1">
+                <span class="glyphicon glyphicon-cog pull-right"></span>
+            </div>
+        </div>
     </div>
     <div class="content container" ng-controller="taskCtrl">
-        <div ng-repeat="task in tasklist" class="task btn btn-danger">{{task.name}}<span class="glyphicon glyphicon-remove pull-right"></span></div>
-        <addon ng-show="jshow"></addon>
+        <div ng-repeat="task in tasklist | filter:taskfilter" class="task btn btn-primary">
+            <div class="col-xs-6">{{task.name}} </div>
+            <div class="col-xs-4">{{task.date}}</div>
+            <div class="col-xs-1">
+                <span class="glyphicon glyphicon-ok pull-right" ng-click="done($index)"></span>
+            </div>
+            <div class="col-xs-1">
+                <span class="glyphicon glyphicon-remove pull-right" ng-click="remove($index)"></span>
+            </div>
+        </div>
+        <div class="task-box" ng-show="jshow">
+            <input type="text" class="form-control" placeholder="Your new task name" ng-model='taskName'>
+            <input class="form-control datetimepicker" type="text" placeholder="Choose date" data-date-autoclose='true' ng-model="taskDate" dateselect/>
+            <button class='btn btn-xs btn-primary addsure' ng-click="addon()">add</button>
+            <button class='btn btn-xs btn-default addcancel' ng-click="cancel()">cancel</button>
+        </div>
         <div class="task-add btn btn-default" ng-click="addTask()">Add</div>
+    </div>
+    <div class="footer navbar-fixed-bottom" ng-controller="footCtrl">
+        <div class="footer-inner container">
+            <span class="badge badge-warning">{{tasklist.length}}</span>项未完成
+        </div>
     </div>
     
     <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
     <script src="//cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
     <script src="js/less.js"></script>
     <script src="js/test.js"></script>

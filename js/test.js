@@ -1,43 +1,63 @@
 var app=angular.module("app",[]);
 
+app.controller("parantCtrl",function($scope,$rootScope){
+    $rootScope.tasklist=[];
+    $rootScope.donelist=[];
+    $rootScope.taskfilter="";
+})
 
-app.controller("taskCtrl",function ($scope) {
+app.controller("headCtrl",function($scope,$rootScope){
+    $scope.transit=function() {
+        $rootScope.taskfilter=$scope.taskfilter;
+    }
+})
+
+app.controller("taskCtrl",function ($scope,$rootScope) {
     $scope.jshow=false;
-    $scope.tasklist=[];
     
     $scope.addTask=function() {
         $scope.jshow=true;
+        console.log($rootScope.taskfilter);
     }
     
-    $scope.removeTask=function(){
-        
+    $scope.cancel=function() {
+        $scope.jshow=false;
+    }
+    
+    $scope.addon=function(){
+        if($scope.taskName && $scope.taskDate){
+            $rootScope.tasklist.push({
+                "name":$scope.taskName,
+                "date":$scope.taskDate
+            })
+            $scope.taskName="";
+            $scope.taskDate="";
+            $scope.jshow=false;
+        }else{
+            alert("任务名不能为空");
+        }
+    }
+    
+    $scope.done=function(index) {
+        $rootScope.donelist.push($rootScope.tasklist[index]);
+        $rootScope.tasklist.splice(index,1);
+    }
+    
+    $scope.remove=function(index){
+        $rootScope.tasklist.splice(index,1);
     }
 })
 
 
-app.directive("addon",function(){
-    return {
-        restrict:"E",
-        replace:true,
-        template:"<div class='task-box'><input type='text' class='form-control' placeholder='Descripition of your new task' ng-model='taskName'/><button class='btn btn-xs btn-primary addsure'>add</button><button class='btn btn-xs btn-default addcancel'>cancel</button></div>",
+app.controller("footCtrl",function($scope,$rootScope){
+    
+})
+
+app.directive("dateselect",function(){
+    return{
+        restrict:"A",
         link:function(scope,element,attrs){
-            angular.element(".addcancel").click(function(){
-                scope.jshow=false;
-                scope.$apply();
-            })
-            
-            angular.element(".addsure").click(function(){
-                if(scope.taskName){
-                    scope.tasklist.push({
-                        "name":scope.taskName
-                    })
-                    scope.taskName="";
-                    scope.jshow=false;
-                    scope.$apply();
-                }else{
-                    alert("任务名不能为空");
-                }
-            })
+            element.datepicker();
         }
     }
 })
