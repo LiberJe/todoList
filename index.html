@@ -11,7 +11,7 @@
     <div class="header navbar-static-top" ng-controller="headCtrl">
         <div class="header-inner container">
             <div class="col-xs-1">
-                <span class="glyphicon glyphicon-user pull-left"></span>
+                <span class="glyphicon glyphicon-user pull-left user"  ng-click="toggleStatus()"></span>
             </div>
             <div class="col-xs-7">My task list</div>
             <div class="col-xs-3">
@@ -19,6 +19,32 @@
             </div>
             <div class="col-xs-1">
                 <span class="glyphicon glyphicon-cog pull-right"></span>
+            </div>
+        </div>
+        <div class="sidebar-box" ng-show="sidebarStatus" ng-controller="sidebarCtrl">
+            <div class="sidebar-header container">
+                <div class="user-head">
+                    <img src="img/head.jpg" width="120px" height="120px" alt="">
+                    <p>{{userData.username}}</p>
+                </div>
+            </div>
+            <div class="sidebar-content container">
+                <div class="sd-content-box">
+                    <p class="list-head">任务清单</p>
+                    <ul class="list-content" ng-repeat="item in userData.list">
+                        <li><span class=" glyphicon glyphicon-th-list"></span>{{item.listname}}</li>
+                    </ul>
+                    <div class="list-add-box" ng-show="lshow">
+                        <input type="text" class="form-control" placeholder="Your new list name" ng-model='listName'>
+                        <select name="" id="" class="form-control" ng-model="listType">
+                            <option value="day">day</option>
+                            <option value="week">week</option>
+                        </select>
+                        <button class='btn btn-xs btn-primary addsure' ng-click="addon()">add</button>
+                        <button class='btn btn-xs btn-default addcancel' ng-click="cancel()">cancel</button>
+                    </div>
+                    <div class="btn btn-default" ng-click="addList()">Add</div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,10 +73,13 @@
         </div>
     </div>
     
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/assets/jquery.js"></script>
+    <script src="js/assets/bootstrap-datepicker.js"></script>
     <script src="//cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
-    <script src="js/less.js"></script>
-    <script src="js/test.js"></script>
+    <script src="js/assets/less.js"></script>
+    <script src="js/main/main.js"></script>
+    <script src="js/main/controller.js"></script>
+    <script src="js/main/directive.js"></script>
+    <script src="js/main/service.js"></script>
 </body>
 </html>
