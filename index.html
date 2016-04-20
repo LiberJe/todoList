@@ -25,18 +25,18 @@
             <div class="sidebar-header container">
                 <div class="user-head">
                     <img src="img/head.jpg" width="120px" height="120px" alt="">
-                    <p>{{userData.username}}</p>
+                    <p>{{username}}</p>
                 </div>
             </div>
             <div class="sidebar-content container">
                 <div class="sd-content-box">
                     <p class="list-head">任务清单</p>
-                    <ul class="list-content" ng-repeat="item in userData.list">
-                        <li><span class=" glyphicon glyphicon-th-list"></span>{{item.listname}}</li>
+                    <ul class="list-content" ng-repeat="item in listgroup">
+                        <li ng-click="selectData($index)"><span class=" glyphicon glyphicon-th-list"></span>{{item.groupname}}</li>
                     </ul>
                     <div class="list-add-box" ng-show="lshow">
-                        <input type="text" class="form-control" placeholder="Your new list name" ng-model='listName'>
-                        <select name="" id="" class="form-control" ng-model="listType">
+                        <input type="text" class="form-control" placeholder="Your new list name" ng-model='groupName'>
+                        <select name="" id="" class="form-control" ng-model="groupType">
                             <option value="day">day</option>
                             <option value="week">week</option>
                         </select>
@@ -49,7 +49,7 @@
         </div>
     </div>
     <div class="content container" ng-controller="taskCtrl">
-        <div ng-repeat="task in tasklist | filter:taskfilter" class="task btn btn-primary">
+        <div ng-repeat="task in taskGroup | filter:taskfilter" class="task btn btn-primary">
             <div class="col-xs-6">{{task.name}} </div>
             <div class="col-xs-4">{{task.date}}</div>
             <div class="col-xs-1">

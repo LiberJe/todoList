@@ -11,3 +11,14 @@ app.service("toggleStatus",function(){
     }
 })
 
+
+app.service("userData",function(){
+    if(localStorage.user){
+        return JSON.parse(localStorage.user);
+    }else{
+        this.username="JeLewine";
+        this.listgroup=[];
+    }
+})
+
+app.value("selectgroup",0);
