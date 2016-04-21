@@ -8,6 +8,10 @@ a{
 a:hover{
     text-decoration: none;
 }
+html{
+    min-width: 420px;
+}
+
 
 .header{
     width: 100%;
@@ -38,10 +42,11 @@ a:hover{
         width: 80%;
         height: 95%;
         position: absolute;
-        left: 0;
+        left: -80%;
         top:40px;
+        z-index: 2;
         background-color: lightgray;
-        
+        transition: left 0.5s;
         .sidebar-header{
             width: 90%;
             height: 300px;
@@ -114,17 +119,23 @@ a:hover{
         margin-top: 10px;
         text-align: left;
         font-size: 14px;
+        background-color: #CCFFFF;
+        border-radius: 5px;
         
         div{
             height: 30px;
             margin-top: 5px;
+            line-height: 30px;
         }
         
         span{
-            padding-top: 2px;
+            padding-top: 7px;
             width: 20px;
             height: 20px;
         }
+    }
+    .task:hover{
+        cursor: pointer;
     }
     
     .task-add{
@@ -148,6 +159,16 @@ a:hover{
             margin-right: 5px;
         }
     }
+    
+    .task-modify{
+        width: 100%;
+        height: 95%;
+        position: absolute;
+        left: 0;
+        top:40px;
+        z-index: 2;
+        background-color: white;
+    }
 }
 
 .footer{
@@ -162,3 +183,5 @@ a:hover{
         
     }
 }
+
+

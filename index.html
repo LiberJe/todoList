@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>anjular</title>
     <link href="//cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="assets/bootstrap-material-design-master/dist/css/bootstrap-material-design.css">
+    <link rel="stylesheet" href="assets/bootstrap-material-design-master/dist/css/ripples.css">    -->
     <link rel="stylesheet/less" href="css/styles.less">
     
 </head>
@@ -11,17 +13,17 @@
     <div class="header navbar-static-top" ng-controller="headCtrl">
         <div class="header-inner container">
             <div class="col-xs-1">
-                <span class="glyphicon glyphicon-user pull-left user"  ng-click="toggleStatus()"></span>
+                <span class="glyphicon glyphicon-user pull-left user"  togglesidebar></span>
             </div>
             <div class="col-xs-7">My task list</div>
             <div class="col-xs-3">
-                <input type="text" class="form-control" ng-model="taskfilter" ng-change="transit()" placeholder="search">
+                <input type="text" class="form-control" ng-model="taskfilter" ng-change="transit()" placeholder="search" changesearch>
             </div>
             <div class="col-xs-1">
                 <span class="glyphicon glyphicon-cog pull-right"></span>
             </div>
         </div>
-        <div class="sidebar-box" ng-show="sidebarStatus" ng-controller="sidebarCtrl">
+        <div class="sidebar-box" ng-controller="sidebarCtrl">
             <div class="sidebar-header container">
                 <div class="user-head">
                     <img src="img/head.jpg" width="120px" height="120px" alt="">
@@ -48,8 +50,8 @@
             </div>
         </div>
     </div>
-    <div class="content container" ng-controller="taskCtrl">
-        <div ng-repeat="task in taskGroup | filter:taskfilter" class="task btn btn-primary">
+    <div class="content container" ng-controller="taskCtrl" recoversearch ng-click="changeSidebar()">
+        <div ng-repeat="task in taskGroup | filter:taskfilter" class="task">
             <div class="col-xs-6">{{task.name}} </div>
             <div class="col-xs-4">{{task.date}}</div>
             <div class="col-xs-1">
@@ -66,6 +68,9 @@
             <button class='btn btn-xs btn-default addcancel' ng-click="cancel()">cancel</button>
         </div>
         <div class="task-add btn btn-default" ng-click="addTask()">Add</div>
+        <!--<div class="task-modify">
+            
+        </div>-->
     </div>
     <div class="footer navbar-fixed-bottom" ng-controller="footCtrl">
         <div class="footer-inner container">
@@ -74,8 +79,11 @@
     </div>
     
     <script src="js/assets/jquery.js"></script>
+    <!--<script src="assets/bootstrap-material-design-master/dist/js/material.js"></script>
+    <script src="assets/bootstrap-material-design-master/dist/js/ripples.js"></script>-->
     <script src="js/assets/bootstrap-datepicker.js"></script>
     <script src="//cdn.bootcss.com/angular.js/1.5.0/angular.js"></script>
+    <script src="//cdn.bootcss.com/angular.js/1.5.0/angular-animate.js"></script>
     <script src="js/assets/less.js"></script>
     <script src="js/main/main.js"></script>
     <script src="js/main/controller.js"></script>

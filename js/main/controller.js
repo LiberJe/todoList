@@ -4,14 +4,14 @@ app.controller("parantCtrl",function($scope,$rootScope){
     $rootScope.taskfilter="";
     // $rootScope.userData="";
     
-    if(localStorage.user){
-        $rootScope.userData=JSON.parse(localStorage.user);
-    }else{
-        $rootScope.userData={
-            "username":"JeLewine",
-            "listgroup":[]
-        }
-    }
+    // if(localStorage.user){
+    //     $rootScope.userData=JSON.parse(localStorage.user);
+    // }else{
+    //     $rootScope.userData={
+    //         "username":"JeLewine",
+    //         "listgroup":[]
+    //     }
+    // }
 })
 
 app.controller("headCtrl",["$scope","$rootScope",function($scope,$rootScope){
@@ -21,12 +21,16 @@ app.controller("headCtrl",["$scope","$rootScope",function($scope,$rootScope){
     
     $scope.sidebarStatus=false;
     
-    $scope.toggleStatus=function(){
-        $scope.sidebarStatus=!$scope.sidebarStatus;
-    }
+    // $scope.toggleStatus=function(){
+    //     $scope.sidebarStatus=!$scope.sidebarStatus;
+    // }
+    
+    // $scope.$on("changeStatus",function(){
+    //     $scope.sidebarStatus=false;
+    // })
 }])
 
-app.controller("sidebarCtrl",["$scope","$rootScope","userData",function($scope,$rootScope,userData){
+app.controller("sidebarCtrl",["$scope","$rootScope","userData","selectgroup",function($scope,$rootScope,userData,selectgroup){
     $scope.groupName="";
     $scope.groupType="";
     $scope.username=userData.username;
@@ -46,7 +50,8 @@ app.controller("sidebarCtrl",["$scope","$rootScope","userData",function($scope,$
             userData.listgroup.push({
                 "groupname":$scope.groupName,
                 "grouptype":$scope.groupType,
-                "taskgroup":[]
+                "taskgroup":[],
+                "donegroup":[]
             })
             
             $scope.groupName="";
@@ -60,20 +65,21 @@ app.controller("sidebarCtrl",["$scope","$rootScope","userData",function($scope,$
     }
     
     $scope.selectData=function(index){
-        $rootScope.$broadcast("selectgroup(index)");
+        selectgroup.index=index;
+        $rootScope.$broadcast("selectgroup");
     }
 }])
 
 
-app.controller("taskCtrl",["$scope","$rootScope","userData",function ($scope,$rootScope,userData) {
+app.controller("taskCtrl",["$scope","$rootScope","userData","selectgroup",function ($scope,$rootScope,userData,selectgroup) {
     $scope.taskName="";
     $scope.taskDate="";
     $scope.selectgroup=0;
     $scope.groupName=userData.listgroup[$scope.selectgroup].groupname;
     $scope.taskGroup=userData.listgroup[$scope.selectgroup].taskgroup;
     
-    $scope.$on("selectgroup",function(index){
-        $scope.selectgroup=index;
+    $scope.$on("selectgroup",function(){
+        $scope.selectgroup=selectgroup.index;
         $scope.groupName=userData.listgroup[$scope.selectgroup].groupname;
         $scope.taskGroup=userData.listgroup[$scope.selectgroup].taskgroup;
     })
@@ -94,6 +100,7 @@ app.controller("taskCtrl",["$scope","$rootScope","userData",function ($scope,$ro
                 "name":$scope.taskName,
                 "date":$scope.taskDate
             })
+            $scope.$broadcast("selectgroup");
             $scope.taskName="";
             $scope.taskDate="";
             $scope.jshow=false;
@@ -105,16 +112,26 @@ app.controller("taskCtrl",["$scope","$rootScope","userData",function ($scope,$ro
     }
     
     $scope.done=function(index) {
-        $rootScope.donelist.push($rootScope.tasklist[index]);
-        $rootScope.tasklist.splice(index,1);
+        userData.listgroup[$scope.selectgroup].donegroup.push(userData.listgroup[$scope.selectgroup].taskgroup[index]);
+        userData.listgroup[$scope.selectgroup].taskgroup.splice(index,1);
+        localStorage.user=JSON.stringify(userData);
     }
     
     $scope.remove=function(index){
-        $rootScope.tasklist.splice(index,1);
+        userData.listgroup[$scope.selectgroup].taskgroup.splice(index,1);
+        localStorage.user=JSON.stringify(userData);
+    }
+    
+    $scope.changeSidebar=function(){
+        $rootScope.$broadcast("changeStatus");
+    }
+    
+    $scope.modifyTask=function(){
+        
     }
 }])
 
 
-app.controller("footCtrl",function($scope,$rootScope){
-    
-})
+app.controller("footCtrl",["$scope","$rootScope","userData","selectgroup",function($scope,$rootScope,userData,selectgroup){
+    $scope.tasklist=userData.listgroup[selectgroup.index].taskgroup;
+}])

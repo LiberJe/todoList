@@ -21,4 +21,9 @@ app.service("userData",function(){
     }
 })
 
-app.value("selectgroup",0);
+app.factory("selectgroup",function(){
+    return  {
+        index:0
+    }    
+})
+
