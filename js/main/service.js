@@ -27,3 +27,9 @@ app.factory("selectgroup",function(){
     }    
 })
 
+app.factory("selecttask",function(){
+    return{
+        groupindex:0,
+        taskindex:0
+    }
+})

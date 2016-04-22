@@ -8,11 +8,11 @@
                 "grouptype":"day",
                 "taskgroup":[
                     {
-                        "listname":"english",
+                        "name":"english",
                         "date":"2015-09-27"
                     },
                     {
-                        "listname":"math",
+                        "name":"math",
                         "date":"2015-09-27"
                     }
                 ],
@@ -23,12 +23,12 @@
                 "grouptype":"week",
                 "taskgroup":[
                     {
-                        "listname":"english",
+                        "name":"english",
                         "date":"2015-09-27",
                         "done":false
                     },
                     {
-                        "listname":"math",
+                        "name":"math",
                         "date":"2015-09-27",
                         "done":false
                     }
